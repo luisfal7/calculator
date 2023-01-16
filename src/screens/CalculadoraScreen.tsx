@@ -14,7 +14,7 @@ export const CalculadoraScreen = () => {
   const [numeroAnterior, setNumeroAnterior] = useState('0');
   const [numero, setNumero] = useState('0');
 
-  const ultimaOprecion = useRef<Operadores>();
+  const ultimaOperacion = useRef<Operadores>();
 
   const limpiar = () => {
     setNumero('0');
@@ -73,32 +73,52 @@ export const CalculadoraScreen = () => {
   const cambiarNumPorAnterior = () => {
     if (numero.endsWith('.')) {
       setNumeroAnterior(numero.slice(0, -1));
-      setNumero('0');
     } else {
-      setNumero(numero);
+        setNumeroAnterior(numero);
     }
     setNumero('0');
   };
 
   const btnDivir = () => {
     cambiarNumPorAnterior()
-    ultimaOprecion.current = Operadores.dividir;
+    ultimaOperacion.current = Operadores.dividir;
   };
 
   const btnMultiplicar = () => {
     cambiarNumPorAnterior()
-    ultimaOprecion.current = Operadores.multiplicar;
+    ultimaOperacion.current = Operadores.multiplicar;
   };
 
   const btnRestar = () => {
     cambiarNumPorAnterior()
-    ultimaOprecion.current = Operadores.restar;
+    ultimaOperacion.current = Operadores.restar;
   };
 
   const btnSumar = () => {
     cambiarNumPorAnterior()
-    ultimaOprecion.current = Operadores.sumar;
+    ultimaOperacion.current = Operadores.sumar;
   };
+
+  const calcular = () => {
+    const num1 = Number(numero)
+    const num2 = Number(numeroAnterior)
+
+    switch (ultimaOperacion.current) {
+        case Operadores.sumar:
+            setNumero(`${num1 + num2}`)
+            break;
+        case Operadores.restar:
+            setNumero(`${num2 - num1}`)
+            break;
+        case Operadores.multiplicar:
+            setNumero(`${num1 * num2}`)
+            break;
+        case Operadores.dividir:
+            setNumero(`${num2 / num1}`)
+            break;
+    }
+    setNumeroAnterior('0')
+  }
 
   return (
     <View style={styles.calculadoraContainer}>
@@ -141,7 +161,7 @@ export const CalculadoraScreen = () => {
       <View style={styles.fila}>
         <BotonCalc texto="0" ancho accion={armarNumero} />
         <BotonCalc texto="." accion={armarNumero} />
-        <BotonCalc texto="=" color="#FF9427" accion={limpiar} />
+        <BotonCalc texto="=" color="#FF9427" accion={calcular} />
       </View>
     </View>
   );
