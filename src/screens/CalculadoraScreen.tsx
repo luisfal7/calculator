@@ -31,7 +31,7 @@ export const CalculadoraScreen = () => {
 
       {/* fila de botones */}
       <View style={styles.fila}>
-        <BotonCalc texto="C" color="#9B9B9B" accion={limpiar} />
+        <BotonCalc texto="C" color="red" accion={limpiar} />
         <BotonCalc texto="+/-" color="#9B9B9B" accion={positivoNegativo} />
         <BotonCalc texto="del" color="#9B9B9B" accion={btnDelete} />
         <BotonCalc texto="/" color="#FF9427" accion={btnDivir} />
